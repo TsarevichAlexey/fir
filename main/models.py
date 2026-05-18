@@ -20,27 +20,28 @@ class Category(models.Model):
     def __str__(self):
         return self.name #возвращает имя категории в админке 
     
-class Color(models.Model):#встроенная функция, которая создает поля/параметры, которые затем через миграцию отправляются в бд
+class Variation(models.Model):#встроенная функция, которая создает поля/параметры, которые затем через миграцию отправляются в бд
     name = models.CharField()
 
     def __str__(self):
         return self.name
     
-class ProductColor(models.Model):
+class ProductVariation(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='product_variant')#удалится товар - удалится связь; product_variant - имя в админке
-    color =  models.ForeignKey(Color, on_delete=models.CASCADE) #удалится цвет, удалится связь
+    variation =  models.ForeignKey(Variation, on_delete=models.CASCADE) #удалится цвет, удалится связь
     stock = models.PositiveIntegerField(default=0)#Количество товара
 
     def __str__(self):
-        return f'{self.color.name} ({self.stock} in stock) for {self.product.name}' #такой-то цвет в таком-то количестве для такого-то товара
+        return f'{self.variation.name} ({self.stock} in stock) for {self.product.name}' #такой-то цвет в таком-то количестве для такого-то товара
 
 
 class Product (models.Model):
     name = models.CharField(max_length=100)
     slug = models.CharField(max_length=100, unique=True)
     #ForeignKey берет все параметры, функции класса
+    variation = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')#Cascade обозначает, что при удалении категории удаляются все объекты этой категории
-    heigt = models.IntegerField(); width = models.IntegerField(); length = models.IntegerField()
+    height = models.IntegerField(); width = models.IntegerField(); length = models.IntegerField()
     weight = models.DecimalField(max_digits=6,decimal_places=1)
     description = models.TextField(blank=True)#параметр, что поле может быть пустым при заполнении
     #Только главное фото
