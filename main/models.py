@@ -39,7 +39,7 @@ class Product (models.Model):
     name = models.CharField(max_length=100)
     slug = models.CharField(max_length=100, unique=True)
     #ForeignKey берет все параметры, функции класса
-    variation = models.CharField(max_length=100)
+    #variation = models.CharField(max_length=100)#параметр default, чтобы не ругался при миграции - создавалось из-за ошибки
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')#Cascade обозначает, что при удалении категории удаляются все объекты этой категории
     height = models.IntegerField(); width = models.IntegerField(); length = models.IntegerField()
     weight = models.DecimalField(max_digits=6,decimal_places=1)

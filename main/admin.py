@@ -11,8 +11,8 @@ class ProductVariationInline (admin.TabularInline):
     extra = 1
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category','variation', 'height', 'width', 'length'] #параметры в таблице, которые будут отображаться в админке
-    list_filter = ['category', 'variation']#категории по которым происходит сортировка
+    list_display = ['name', 'category', 'height', 'width', 'length'] #параметры в таблице, которые будут отображаться в админке
+    list_filter = ['category']#категории по которым происходит сортировка
     search_fields = ['name', 'category', 'description'] # поля по которым происходит поиск
     prepopulated_fields = {'slug': ('name',)}#поля, которые будут заполняться по заданному принципу автоматически
     inlines = [ProductImageInline, ProductVariationInline] #будут отображаться на странице добавления продуктов
